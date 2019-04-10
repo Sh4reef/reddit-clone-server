@@ -3,7 +3,7 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateTopic {
   count: Int!
 }
 
@@ -14,12 +14,12 @@ type BatchPayload {
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createTopic(data: TopicCreateInput!): Topic!
+  updateTopic(data: TopicUpdateInput!, where: TopicWhereUniqueInput!): Topic
+  updateManyTopics(data: TopicUpdateManyMutationInput!, where: TopicWhereInput): BatchPayload!
+  upsertTopic(where: TopicWhereUniqueInput!, create: TopicCreateInput!, update: TopicUpdateInput!): Topic!
+  deleteTopic(where: TopicWhereUniqueInput!): Topic
+  deleteManyTopics(where: TopicWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -40,79 +40,86 @@ type PageInfo {
 }
 
 type Query {
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  topic(where: TopicWhereUniqueInput!): Topic
+  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic]!
+  topicsConnection(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TopicConnection!
   node(id: ID!): Node
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
 }
 
-type User {
+type Topic {
   id: ID!
-  name: String!
+  content: String!
+  votes: Int!
 }
 
-type UserConnection {
+type TopicConnection {
   pageInfo: PageInfo!
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+  edges: [TopicEdge]!
+  aggregate: AggregateTopic!
 }
 
-input UserCreateInput {
-  name: String!
+input TopicCreateInput {
+  content: String!
+  votes: Int
 }
 
-type UserEdge {
-  node: User!
+type TopicEdge {
+  node: Topic!
   cursor: String!
 }
 
-enum UserOrderByInput {
+enum TopicOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  content_ASC
+  content_DESC
+  votes_ASC
+  votes_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
 
-type UserPreviousValues {
+type TopicPreviousValues {
   id: ID!
-  name: String!
+  content: String!
+  votes: Int!
 }
 
-type UserSubscriptionPayload {
+type TopicSubscriptionPayload {
   mutation: MutationType!
-  node: User
+  node: Topic
   updatedFields: [String!]
-  previousValues: UserPreviousValues
+  previousValues: TopicPreviousValues
 }
 
-input UserSubscriptionWhereInput {
+input TopicSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: UserWhereInput
-  AND: [UserSubscriptionWhereInput!]
-  OR: [UserSubscriptionWhereInput!]
-  NOT: [UserSubscriptionWhereInput!]
+  node: TopicWhereInput
+  AND: [TopicSubscriptionWhereInput!]
+  OR: [TopicSubscriptionWhereInput!]
+  NOT: [TopicSubscriptionWhereInput!]
 }
 
-input UserUpdateInput {
-  name: String
+input TopicUpdateInput {
+  content: String
+  votes: Int
 }
 
-input UserUpdateManyMutationInput {
-  name: String
+input TopicUpdateManyMutationInput {
+  content: String
+  votes: Int
 }
 
-input UserWhereInput {
+input TopicWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -127,26 +134,34 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  votes: Int
+  votes_not: Int
+  votes_in: [Int!]
+  votes_not_in: [Int!]
+  votes_lt: Int
+  votes_lte: Int
+  votes_gt: Int
+  votes_gte: Int
+  AND: [TopicWhereInput!]
+  OR: [TopicWhereInput!]
+  NOT: [TopicWhereInput!]
 }
 
-input UserWhereUniqueInput {
+input TopicWhereUniqueInput {
   id: ID
 }
 `

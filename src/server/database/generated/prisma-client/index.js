@@ -5,13 +5,13 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
-    name: "User",
+    name: "Topic",
     embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://sarahah-heroku-f8ac4d5aab.herokuapp.com/moovaz-reddit/dev`
+  endpoint: `https://eu1.prisma.sh/shareef/moovaz-reddit/dev`
 });
 exports.prisma = new exports.Prisma();

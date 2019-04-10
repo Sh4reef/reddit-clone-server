@@ -1,4 +1,5 @@
-type User {
+type Topic {
   id: ID! @unique
-  name: String!
+  content: String!
+  votes: Int! @default(value: "0")
 }
