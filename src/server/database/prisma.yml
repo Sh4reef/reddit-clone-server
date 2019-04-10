@@ -1,0 +1,6 @@
+endpoint: https://eu1.prisma.sh/shareef/moovaz-reddit/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ./database/generated/prisma-client/
