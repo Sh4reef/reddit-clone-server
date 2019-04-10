@@ -4,11 +4,11 @@ const { GraphQLServer } = require('graphql-yoga')
 const resolvers = {
   Query: {
     async topics(root, args, context) {
-      return await context.prisma.topics()
+      return await context.prisma.topics({orderBy: args.orderBy})
     }
   },
   Mutation: {
-    async newTopic(root, args, context) {      
+    async newTopic(root, args, context) {
       return await context.prisma.createTopic({
         content: args.content
       })
@@ -22,6 +22,21 @@ const resolvers = {
       return await context.prisma.updateTopic({
         data: {
           votes: ++topic.votes
+        },
+        where: {
+          id: args.id
+        }
+      })
+    },
+    async downVote(root, args, context) {
+      const [topic] = await context.prisma.topics({
+        where: {
+          id: args.id
+        }
+      })
+      return await context.prisma.updateTopic({
+        data: {
+          votes: --topic.votes
         },
         where: {
           id: args.id
