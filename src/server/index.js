@@ -1,6 +1,8 @@
 const { prisma } = require('./database/generated/prisma-client')
 const { GraphQLServer } = require('graphql-yoga')
 
+/* My implementation */
+
 const resolvers = {
   Query: {
     async topics(root, args, context) {
@@ -45,6 +47,8 @@ const resolvers = {
     }
   }
 }
+
+/* My implementation */
 
 new GraphQLServer({
   typeDefs: 'src/server/schema.graphql',

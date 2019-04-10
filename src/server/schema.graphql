@@ -1,5 +1,7 @@
 # import * from './database/generated/prisma-client/prisma.graphql'
 
+# My implementation
+
 type Query {
   topics(orderBy: TopicOrderByInput): [Topic!]!
 }
@@ -9,3 +11,5 @@ type Mutation {
   upVote(id: ID!): Topic
   downVote(id: ID!): Topic
 }
+
+# My implementation

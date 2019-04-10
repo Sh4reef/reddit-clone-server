@@ -1,5 +1,10 @@
+
+# My implementation
+
 type Topic {
   id: ID! @unique
   content: String!
   votes: Int! @default(value: "0")
 }
+
+# My implementation
