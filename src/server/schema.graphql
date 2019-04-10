@@ -6,4 +6,5 @@ type Query {
 
 type Mutation {
   newTopic(content: String!): Topic
+  upVote(id: ID!): Topic
 }

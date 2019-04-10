@@ -12,6 +12,21 @@ const resolvers = {
       return await context.prisma.createTopic({
         content: args.content
       })
+    },
+    async upVote(root, args, context) {
+      const [topic] = await context.prisma.topics({
+        where: {
+          id: args.id
+        }
+      })
+      return await context.prisma.updateTopic({
+        data: {
+          votes: ++topic.votes
+        },
+        where: {
+          id: args.id
+        }
+      })
     }
   }
 }
