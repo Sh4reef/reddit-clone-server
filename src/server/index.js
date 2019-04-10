@@ -5,7 +5,14 @@ const resolvers = {
   Query: {
     async topics(root, args, context) {
       return await context.prisma.topics()
-    }    
+    }
+  },
+  Mutation: {
+    async newTopic(root, args, context) {      
+      return await context.prisma.createTopic({
+        content: args.content
+      })
+    }
   }
 }
 
