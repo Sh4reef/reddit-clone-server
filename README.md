@@ -16,7 +16,13 @@ Through this app the user can create a new<br/>
 topic or upvote and downvote existing topics<br/>
 from the GraphQL playground
 
-## Launch the app locally
+## Live endpoint
+This is a free tier so expect a delay
+```
+https://moovaz-reddit-lfgfmdkzrk.now.sh/
+```
+
+## Launch the server locally
 - Clone the repository<br/>
 ```
 git clone https://github.com/Sh4reef/reddit-clone-server.git
