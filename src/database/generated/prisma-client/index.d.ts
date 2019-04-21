@@ -106,20 +106,25 @@ export interface ClientConstructor<T> {
 export type TopicOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "content_ASC"
-  | "content_DESC"
-  | "votes_ASC"
-  | "votes_DESC"
+  | "author_ASC"
+  | "author_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
+  | "content_ASC"
+  | "content_DESC"
+  | "votes_ASC"
+  | "votes_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type TopicWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface TopicCreateInput {
+  id?: ID_Input;
+  author?: String;
+  content: String;
+  votes?: Int;
+}
 
 export interface TopicWhereInput {
   id?: ID_Input;
@@ -136,6 +141,36 @@ export interface TopicWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  author?: String;
+  author_not?: String;
+  author_in?: String[] | String;
+  author_not_in?: String[] | String;
+  author_lt?: String;
+  author_lte?: String;
+  author_gt?: String;
+  author_gte?: String;
+  author_contains?: String;
+  author_not_contains?: String;
+  author_starts_with?: String;
+  author_not_starts_with?: String;
+  author_ends_with?: String;
+  author_not_ends_with?: String;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
   content?: String;
   content_not?: String;
   content_in?: String[] | String;
@@ -163,17 +198,14 @@ export interface TopicWhereInput {
   NOT?: TopicWhereInput[] | TopicWhereInput;
 }
 
-export interface TopicCreateInput {
-  content: String;
-  votes?: Int;
-}
-
 export interface TopicUpdateInput {
+  author?: String;
   content?: String;
   votes?: Int;
 }
 
 export interface TopicUpdateManyMutationInput {
+  author?: String;
   content?: String;
   votes?: Int;
 }
@@ -189,18 +221,61 @@ export interface TopicSubscriptionWhereInput {
   NOT?: TopicSubscriptionWhereInput[] | TopicSubscriptionWhereInput;
 }
 
+export type TopicWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
 export interface NodeNode {
   id: ID_Output;
 }
 
+export interface TopicEdge {
+  node: Topic;
+  cursor: String;
+}
+
+export interface TopicEdgePromise extends Promise<TopicEdge>, Fragmentable {
+  node: <T = TopicPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TopicEdgeSubscription
+  extends Promise<AsyncIterator<TopicEdge>>,
+    Fragmentable {
+  node: <T = TopicSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
 export interface Topic {
   id: ID_Output;
+  author: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
   content: String;
   votes: Int;
 }
 
 export interface TopicPromise extends Promise<Topic>, Fragmentable {
   id: () => Promise<ID_Output>;
+  author: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
   content: () => Promise<String>;
   votes: () => Promise<Int>;
 }
@@ -209,8 +284,36 @@ export interface TopicSubscription
   extends Promise<AsyncIterator<Topic>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  author: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   content: () => Promise<AsyncIterator<String>>;
   votes: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TopicSubscriptionPayload {
+  mutation: MutationType;
+  node: Topic;
+  updatedFields: String[];
+  previousValues: TopicPreviousValues;
+}
+
+export interface TopicSubscriptionPayloadPromise
+  extends Promise<TopicSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TopicPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TopicPreviousValuesPromise>() => T;
+}
+
+export interface TopicSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TopicSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TopicSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TopicPreviousValuesSubscription>() => T;
 }
 
 export interface TopicConnection {
@@ -257,23 +360,6 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface TopicEdge {
-  node: Topic;
-  cursor: String;
-}
-
-export interface TopicEdgePromise extends Promise<TopicEdge>, Fragmentable {
-  node: <T = TopicPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TopicEdgeSubscription
-  extends Promise<AsyncIterator<TopicEdge>>,
-    Fragmentable {
-  node: <T = TopicSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface AggregateTopic {
   count: Int;
 }
@@ -290,49 +376,11 @@ export interface AggregateTopicSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface TopicSubscriptionPayload {
-  mutation: MutationType;
-  node: Topic;
-  updatedFields: String[];
-  previousValues: TopicPreviousValues;
-}
-
-export interface TopicSubscriptionPayloadPromise
-  extends Promise<TopicSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TopicPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TopicPreviousValuesPromise>() => T;
-}
-
-export interface TopicSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TopicSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TopicSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TopicPreviousValuesSubscription>() => T;
-}
-
 export interface TopicPreviousValues {
   id: ID_Output;
+  author: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
   content: String;
   votes: Int;
 }
@@ -341,6 +389,9 @@ export interface TopicPreviousValuesPromise
   extends Promise<TopicPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  author: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
   content: () => Promise<String>;
   votes: () => Promise<Int>;
 }
@@ -349,9 +400,32 @@ export interface TopicPreviousValuesSubscription
   extends Promise<AsyncIterator<TopicPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  author: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   content: () => Promise<AsyncIterator<String>>;
   votes: () => Promise<AsyncIterator<Int>>;
 }
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -363,16 +437,6 @@ export type ID_Output = string;
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
 
 export type Long = string;
 

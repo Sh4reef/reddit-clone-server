@@ -2,9 +2,12 @@
 # My implementation
 
 type Topic {
-  id: ID! @unique
+  id: ID! @id
+  author: String! @default(value: "anonymous")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   content: String!
-  votes: Int! @default(value: "0")
+  votes: Int! @default(value: 0)
 }
 
 # My implementation

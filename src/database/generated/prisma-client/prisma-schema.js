@@ -11,6 +11,8 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
@@ -52,6 +54,9 @@ type Subscription {
 
 type Topic {
   id: ID!
+  author: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   content: String!
   votes: Int!
 }
@@ -63,6 +68,8 @@ type TopicConnection {
 }
 
 input TopicCreateInput {
+  id: ID
+  author: String
   content: String!
   votes: Int
 }
@@ -75,18 +82,23 @@ type TopicEdge {
 enum TopicOrderByInput {
   id_ASC
   id_DESC
-  content_ASC
-  content_DESC
-  votes_ASC
-  votes_DESC
+  author_ASC
+  author_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  content_ASC
+  content_DESC
+  votes_ASC
+  votes_DESC
 }
 
 type TopicPreviousValues {
   id: ID!
+  author: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   content: String!
   votes: Int!
 }
@@ -110,11 +122,13 @@ input TopicSubscriptionWhereInput {
 }
 
 input TopicUpdateInput {
+  author: String
   content: String
   votes: Int
 }
 
 input TopicUpdateManyMutationInput {
+  author: String
   content: String
   votes: Int
 }
@@ -134,6 +148,36 @@ input TopicWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  author: String
+  author_not: String
+  author_in: [String!]
+  author_not_in: [String!]
+  author_lt: String
+  author_lte: String
+  author_gt: String
+  author_gte: String
+  author_contains: String
+  author_not_contains: String
+  author_starts_with: String
+  author_not_starts_with: String
+  author_ends_with: String
+  author_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   content: String
   content_not: String
   content_in: [String!]
