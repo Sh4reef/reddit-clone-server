@@ -19,7 +19,7 @@ from the GraphQL playground
 ## Live endpoint
 This is a free tier so expect a delay
 ```
-https://moovaz-reddit-lfgfmdkzrk.now.sh/
+https://mrserver.now.sh/
 ```
 
 ## Launch the server locally
